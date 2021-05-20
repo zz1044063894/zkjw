@@ -7,7 +7,6 @@ import com.zkteco.utils.HttpRequestUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import weaver.conn.RecordSet;
-import weaver.formmode.setup.ModeRightInfo;
 import weaver.general.BaseBean;
 import weaver.general.Util;
 import weaver.interfaces.schedule.BaseCronJob;
@@ -66,6 +65,9 @@ public class ZktecoMsgTimeTask extends BaseCronJob {
                 JSONObject dataJson = JSONObject.fromObject(data);
                 bb.writeLog("------------------->INFO: 获取中控数据结果 " + data);
                 count = (int) dataJson.get("count");
+                if (count == 0) {
+                    break;
+                }
                 JSONArray itemsJson = (JSONArray) dataJson.get("items");
                 List<ItemEntity> items = (List<ItemEntity>) JSONArray.toCollection(JSONArray.fromObject(itemsJson), ItemEntity.class);
                 String userId = "";
@@ -73,6 +75,7 @@ public class ZktecoMsgTimeTask extends BaseCronJob {
                 int kqId = -1;
                 String pin = "";
                 String username = "";
+                String sn = "";
                 int oaId = -1;
                 for (int i = 0; i < items.size(); i++) {
                     ItemEntity item = items.get(i);
@@ -82,7 +85,8 @@ public class ZktecoMsgTimeTask extends BaseCronJob {
                     username = item.getEname();
                     userId = pin;
                     oaId = getOaUserId(userId);
-                    insertTzMsg(String.valueOf(oaId), checkTime, kqId, pin, username, date);
+                    sn = item.getSn();
+                    insertTzMsg(String.valueOf(oaId), checkTime, kqId, pin, username, date, sn);
                 }
                 total += count;
 
@@ -107,10 +111,10 @@ public class ZktecoMsgTimeTask extends BaseCronJob {
      * @param username  中控人员姓名
      * @param date      插入时间
      */
-    public void insertTzMsg(String userId, String checkTime, int kqId, String pin, String username, String date) {
+    public void insertTzMsg(String userId, String checkTime, int kqId, String pin, String username, String date, String zkId) {
         String tzSql = "INSERT INTO uf_zkjwkqtz " +
-                "( kqsj,kqzt, kqry, kqid, kqjbh,zkryid,zkryxm,modedatacreatedate) VALUES " +
-                "('" + checkTime + "',1,'" + userId + "', '" + kqId + "', '" + zkId + "', '" + pin + "','" + username + "','" + date + "')";//台账sql
+                "( kqsj,kqzt, kqry, kqid, kqjbh,zkryid,zkryxm,formmodeid,modedatacreatedate,modedatacreater,modedatacreatertype,modedatacreatetime) VALUES " +
+                "('" + checkTime + "',1,'" + userId + "', '" + kqId + "', '" + zkId + "', '" + pin + "','" + username + "',12,'" + date + "','1','0','23:59:59')";//台账sql
         RecordSet rs = new RecordSet();
 
         /**

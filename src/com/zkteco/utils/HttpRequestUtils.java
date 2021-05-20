@@ -12,7 +12,6 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
-import static com.constant.Constant.EMPTY_KEY;
 
 public class HttpRequestUtils {
     private BaseBean bb = new BaseBean();
@@ -25,7 +24,7 @@ public class HttpRequestUtils {
      * @return URL 所代表远程资源的响应结果
      */
     public String sendGet(String url, String param) {
-        String result = EMPTY_KEY;
+        String result = "";
         BufferedReader in = null;
         try {
             String urlNameString = url + "?" + param;
@@ -79,7 +78,7 @@ public class HttpRequestUtils {
     public String sendPost(String url, String param) {
         PrintWriter out = null;
         BufferedReader in = null;
-        String result = EMPTY_KEY;
+        String result = "EMPTY_KEY";
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
