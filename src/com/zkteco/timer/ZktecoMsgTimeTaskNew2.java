@@ -19,7 +19,7 @@ import java.util.*;
  * @author: JingChu
  * @createtime :2021-01-12 16:31:27
  **/
-public class ZktecoMsgTimeTaskNew extends BaseCronJob {
+public class ZktecoMsgTimeTaskNew2 extends BaseCronJob {
     BaseBean bb = new BaseBean();
     String zkKey = bb.getPropValue("zkjwMsgOfZK", "ZKTECO_KEY");
     String zkId = bb.getPropValue("zkjwMsgOfZK", "ZKTECO_ID");
@@ -89,6 +89,7 @@ public class ZktecoMsgTimeTaskNew extends BaseCronJob {
                     insertTzMsg(String.valueOf(oaId), checkTime, kqId, pin, username, date, sn);
                 }
                 total += count;
+                startId +=count;
 
 
             } catch (Exception e) {
@@ -96,7 +97,7 @@ public class ZktecoMsgTimeTaskNew extends BaseCronJob {
             }
         }
         //更新查询到的数据到考勤中间台账
-        updateStartId(startId + total, date, "", id, total);
+        updateStartId(startId , date, "", id, total);
         //更新数据到考勤表
         saveHrmSchedulesignToDB();
     }
