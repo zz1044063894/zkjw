@@ -127,7 +127,7 @@ public class ZktecoMsgTimeTaskNew2 extends BaseCronJob {
          */
         Boolean flag = rs.executeUpdate(tzSql);
 
-        bb.writeLog("------------------->INFO:  台账sql：" + tzSql + " " + flag);
+        //bb.writeLog("------------------->INFO:  台账sql：" + tzSql + " " + flag);
     }
 
     /**
@@ -142,7 +142,7 @@ public class ZktecoMsgTimeTaskNew2 extends BaseCronJob {
 
         Boolean flag = rs.executeUpdate(tzSql);
 
-        bb.writeLog("------------------->INFO:  台账sql：" + tzSql + " " + flag);
+        //bb.writeLog("------------------->INFO:  台账sql：" + tzSql + " " + flag);
     }
 
     /**
@@ -161,7 +161,7 @@ public class ZktecoMsgTimeTaskNew2 extends BaseCronJob {
                 "(" + userId + ", '1', '" + signType + "', '" + signDate + "', '" + signTime + "','" + zkIp + "', '1','" + zkId + "', '1')";//考勤底表sql
         RecordSet rs1 = new RecordSet();
         Boolean flag1 = rs1.executeUpdate(kqSql);
-        bb.writeLog("------------------->INFO:  底表sql：" + kqSql + " " + flag1);
+        //bb.writeLog("------------------->INFO:  底表sql：" + kqSql + " " + flag1);
         return flag1;
     }
 
@@ -265,7 +265,7 @@ public class ZktecoMsgTimeTaskNew2 extends BaseCronJob {
         if (rs.next()) {
             userId = Integer.parseInt(Util.null2String(rs.getString("id")));
         }
-        bb.writeLog("------------------->INFO:  人员id：" + userId + "   人员编号：" + userNo);
+        //bb.writeLog("------------------->INFO:  人员id：" + userId + "   人员编号：" + userNo);
         return userId;
     }
 
